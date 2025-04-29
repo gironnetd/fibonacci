@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.gironnetd"
-version = "1.0.3"
+version = "1.0.4"
 
 kotlin {
     jvm()
