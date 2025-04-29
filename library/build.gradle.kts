@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.gironnetd"
-version = "1.0.6"
+version = "1.0.7"
 
 kotlin {
     jvm()
@@ -44,6 +44,7 @@ kotlin {
         // Optional properties
         // Configure the Pod name here instead of changing the Gradle project name
         name = "fibonacci"
+
 
         val podspec = tasks["podspec"] as PodspecTask
         podspec.doLast {

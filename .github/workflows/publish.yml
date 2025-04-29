@@ -18,7 +18,7 @@ jobs:
           gem install cocoapods
           pod repo update
       - name: Publish to CocoaPods Trunk
-        run: pod trunk push library/fibonacci.podspec
+        run: pod trunk push fibonacci.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
       - name: Set up JDK 21

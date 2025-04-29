@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'fibonacci'
-    spec.version                  = 'null'
+    spec.version                  = '1.0.7'
     spec.homepage                 = 'https://github.com/gironnetd/fibonacci'
     spec.source                   = { :git => 'git@github.com:gironnetd/fibonacci.git', :tag => 'null' }
     spec.authors                  = 'Damien Gironnet'
