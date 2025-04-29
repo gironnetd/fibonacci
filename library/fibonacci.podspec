@@ -1,8 +1,8 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'fibonacci'
-    spec.version                  = '1.0.0'
+    spec.version                  = 'null'
     spec.homepage                 = 'https://github.com/gironnetd/fibonacci'
-    spec.source                   = { :git => 'git@github.com:gironnetd/fibonacci.git', :tag => '1.0.0' }
+    spec.source                   = { :git => 'git@github.com:gironnetd/fibonacci.git', :tag => 'null' }
     spec.authors                  = 'Damien Gironnet'
     spec.license                  = { :type => 'MIT', :text => 'License text'}
     spec.summary                  = 'Some description for a Kotlin/Native module'
