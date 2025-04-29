@@ -3,7 +3,7 @@ on:
   release:
     types: [released, prereleased]
 jobs:
-  publish-maven:
+  publish:
     name: Release build and publish
     runs-on: macOS-latest
     steps:
@@ -23,12 +23,6 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
 
-  publish-cocoapods:
-    name: Publish to CocoaPods Trunk
-    runs-on: macos-latest
-    needs: publish-maven
-
-    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
