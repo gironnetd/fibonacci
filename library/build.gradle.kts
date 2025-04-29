@@ -1,9 +1,12 @@
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+import org.jetbrains.kotlin.gradle.tasks.PodspecTask
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.vanniktech.mavenPublish)
 }
@@ -15,7 +18,6 @@ kotlin {
     jvm()
     androidTarget {
         publishLibraryVariants("release")
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -24,6 +26,53 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
     linuxX64()
+
+    cocoapods {
+        // Required properties
+        // Specify the required Pod version here
+        // Otherwise, the Gradle project version is used
+        version = "1.0.0"
+        summary = "Some description for a Kotlin/Native module"
+        homepage = "https://github.com/gironnetd/fibonacci"
+        authors = "Damien Gironnet"
+        license = "{ :type => 'MIT', :text => 'License text'}"
+
+        specRepos {
+            url("https://github.com/Kotlin/kotlin-cocoapods-spec.git")
+        }
+
+        // Optional properties
+        // Configure the Pod name here instead of changing the Gradle project name
+        name = "fibonacci"
+
+        val podspec = tasks["podspec"] as PodspecTask
+        podspec.doLast {
+            val newPodspecContent = file("${cocoapods.name}.podspec").readLines().map {
+                if (it.contains("spec.source"))
+                    "    spec.source                   = { :git => 'git@github.com:gironnetd/fibonacci.git', :tag => '$version' }" else it
+            }
+            file("${cocoapods.name}.podspec").writeText(newPodspecContent.joinToString(separator = "\n"))
+        }
+
+        framework {
+            // Required properties
+            // Framework name configuration. Use this property instead of deprecated 'frameworkName'
+            baseName = "fibonacci"
+
+            // Optional properties
+            // Specify the framework linking type. It's dynamic by default.
+            isStatic = false
+            // Dependency export
+            // Uncomment and specify another project module if you have one:
+            // export(project(":<your other KMP module>"))
+            @OptIn(ExperimentalKotlinGradlePluginApi::class)
+            transitiveExport = false // This is default.
+        }
+
+        // Maps custom Xcode configuration to NativeBuildType
+        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
+    }
 
     sourceSets {
         val commonMain by getting {
