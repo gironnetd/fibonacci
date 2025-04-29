@@ -16,19 +16,20 @@ jobs:
           java-version: 21
       - name: Publish to MavenCentral
         run: ./gradlew publishToMavenCentral --stacktrace --no-configuration-cache
-      - name: Install Cocoapods
-        run: gem install cocoapods
-
-      - name: Deploy to Cocoapods
-        run: |
-          set -eo pipefail
-          pod lib lint --allow-warnings
-          pod trunk push --allow-warnings
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS }}
+      - uses: actions/checkout@v4
+      - name: Install Cocoapods
+        run: gem install cocoapods
+      - name: Deploy to Cocoapods
+        run: |
+          set -eo pipefail
+          pod lib lint --allow-warnings
+          pod trunk push --allow-warnings
+        env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
 
