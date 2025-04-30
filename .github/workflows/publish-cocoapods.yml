@@ -7,8 +7,6 @@ jobs:
     name: Release build and publish
     runs-on: macOS-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -17,12 +15,14 @@ jobs:
         run: |
           gem install cocoapods
           pod repo update
+      - name: Check out code
+        uses: actions/checkout@v4
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: 21
-      - name: Publish to CocoaPods Trunk
+      - name: Publish to MavenCentral
         run: ./gradlew podPublishXCFramework --stacktrace | pod trunk push
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
