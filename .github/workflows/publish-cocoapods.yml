@@ -23,6 +23,6 @@ jobs:
           distribution: 'zulu'
           java-version: 21
       - name: Publish to CocoaPods Trunk
-        run: ./gradlew podPublishXCFramework --stacktrace | pod trunk push ${{ secrets.PODSPEC_PATH }}/fibonacci.podspec
+        run: ./gradlew podPublishXCFramework --stacktrace | pod trunk push
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
