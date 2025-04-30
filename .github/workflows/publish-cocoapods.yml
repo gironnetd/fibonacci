@@ -18,7 +18,6 @@ jobs:
           gem install cocoapods
           pod repo update
       - name: Publish to CocoaPods Trunk
-        run: pod trunk push $PODSPEC_PATH/fibonacci.podspec
+        run: pod trunk push ${{ secrets.PODSPEC_PATH }}/fibonacci.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
-          PODSPEC_PATH: ${{ secrets.PODSPEC_PATH }}
