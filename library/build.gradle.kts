@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.gironnetd"
-version = "1.0.7"
+version = "1.0.8"
 
 kotlin {
     jvm()
@@ -31,7 +31,7 @@ kotlin {
         // Required properties
         // Specify the required Pod version here
         // Otherwise, the Gradle project version is used
-        version = "$version"
+        version = "${getVersion()}"
         summary = "Some description for a Kotlin/Native module"
         homepage = "https://github.com/gironnetd/fibonacci"
         authors = "Damien Gironnet"
