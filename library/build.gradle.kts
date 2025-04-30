@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.gironnetd"
-version = "1.0.8"
+version = "1.0.9"
 
 kotlin {
     jvm()
@@ -45,12 +45,12 @@ kotlin {
         // Configure the Pod name here instead of changing the Gradle project name
         name = "fibonacci"
 
-
         val podspec = tasks["podspec"] as PodspecTask
         podspec.doLast {
             val newPodspecContent = file("${cocoapods.name}.podspec").readLines().map {
                 if (it.contains("spec.source"))
-                    "    spec.source                   = { :git => 'git@github.com:gironnetd/fibonacci.git', :tag => '$version' }" else it
+                    "    spec.source                   = { :git => 'git@github.com:gironnetd/fibonacci.git', :tag => '$version' }\n" +
+                    "    spec.vendored_frameworks      = 'library/build/cocoapods/framework/#{spec.name}.framework'" else it
             }
             file("${cocoapods.name}.podspec").writeText(newPodspecContent.joinToString(separator = "\n"))
         }

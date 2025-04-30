@@ -1,12 +1,12 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'fibonacci'
-    spec.version                  = '1.0.8'
+    spec.version                  = '1.0.9'
     spec.homepage                 = 'https://github.com/gironnetd/fibonacci'
-    spec.source                   = { :git => 'git@github.com:gironnetd/fibonacci.git', :tag => '1.0.8' }
+    spec.source                   = { :git => 'git@github.com:gironnetd/fibonacci.git', :tag => '1.0.9' }
+    spec.vendored_frameworks      = 'library/build/cocoapods/framework/#{spec.name}.framework'
     spec.authors                  = 'Damien Gironnet'
     spec.license                  = { :type => 'MIT', :text => 'License text'}
     spec.summary                  = 'Some description for a Kotlin/Native module'
-    spec.vendored_frameworks      = 'build/cocoapods/framework/fibonacci.framework'
     spec.libraries                = 'c++'
                 
                 
