@@ -1,9 +1,9 @@
 name: Publish to CocoaPods
 on:
-  release:
-    types: [released, prereleased]
+  push:
+    branches: [ "main" ]
 jobs:
-  publish:
+  build:
     name: Release build and publish
     runs-on: macOS-latest
     steps:
@@ -17,7 +17,12 @@ jobs:
         run: |
           gem install cocoapods
           pod repo update
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 21
       - name: Publish to CocoaPods Trunk
-        run: pod trunk push ${{ secrets.PODSPEC_PATH }}/fibonacci.podspec
+        run: ./gradlew podPublishXCFramework --stacktrace | pod trunk push ${{ secrets.PODSPEC_PATH }}/fibonacci.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}

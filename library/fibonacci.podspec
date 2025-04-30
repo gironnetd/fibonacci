@@ -1,14 +1,18 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'fibonacci'
-    spec.version                  = '1.0.9'
+    spec.version                  = '1.0.10'
     spec.homepage                 = 'https://github.com/gironnetd/fibonacci'
-    spec.source                   = { :git => 'git@github.com:gironnetd/fibonacci.git', :tag => '1.0.9' }
+    spec.source                   = { :git => 'git@github.com:gironnetd/fibonacci.git', :tag => '1.0.10' }
     spec.vendored_frameworks      = 'library/build/cocoapods/framework/#{spec.name}.framework'
     spec.authors                  = 'Damien Gironnet'
     spec.license                  = { :type => 'MIT', :text => 'License text'}
     spec.summary                  = 'Some description for a Kotlin/Native module'
+    spec.vendored_frameworks      = 'build/cocoapods/framework/fibonacci.framework'
     spec.libraries                = 'c++'
-                
+    spec.ios.deployment_target    = '13.5'
+    spec.osx.deployment_target    = '10.15'
+    spec.tvos.deployment_target    = '13.4'
+    spec.watchos.deployment_target    = '6.2'
                 
                 
     if !Dir.exist?('build/cocoapods/framework/fibonacci.framework') || Dir.empty?('build/cocoapods/framework/fibonacci.framework')

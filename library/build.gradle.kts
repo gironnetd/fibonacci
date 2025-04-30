@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "io.github.gironnetd"
-version = "1.0.9"
+version = "1.0.10"
 
 kotlin {
     jvm()
@@ -22,10 +22,29 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+
+//    val xcframeworkName = "Fibonacci"
+//    val xcf = XCFramework(xcframeworkName)
+
+    linuxX64()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-    linuxX64()
+
+//    listOf(
+//        iosX64(),
+//        iosArm64(),
+//        iosSimulatorArm64(),
+//    ).forEach {
+//        it.binaries.framework {
+//            baseName = xcframeworkName
+//
+//            // Specify CFBundleIdentifier to uniquely identify the framework
+//            binaryOption("bundleId", "com.gironnetd.${xcframeworkName}")
+//            xcf.add(this)
+//            isStatic = true
+//        }
+//    }
 
     cocoapods {
         // Required properties
@@ -45,6 +64,11 @@ kotlin {
         // Configure the Pod name here instead of changing the Gradle project name
         name = "fibonacci"
 
+        ios.deploymentTarget = "13.5"
+        osx.deploymentTarget = "10.15"
+        tvos.deploymentTarget = "13.4"
+        watchos.deploymentTarget = "6.2"
+
         val podspec = tasks["podspec"] as PodspecTask
         podspec.doLast {
             val newPodspecContent = file("${cocoapods.name}.podspec").readLines().map {
@@ -60,9 +84,13 @@ kotlin {
             // Framework name configuration. Use this property instead of deprecated 'frameworkName'
             baseName = "fibonacci"
 
+//            // Specify CFBundleIdentifier to uniquely identify the framework
+//            binaryOption("bundleId", "com.gironnetd.${baseName}")
+//            xcf.add(this)
+
             // Optional properties
             // Specify the framework linking type. It's dynamic by default.
-            isStatic = false
+            isStatic = true
             // Dependency export
             // Uncomment and specify another project module if you have one:
             // export(project(":<your other KMP module>"))
